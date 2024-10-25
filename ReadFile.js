@@ -6,7 +6,7 @@ class ReadFile {
     this.code = code;
   }
 
-  static getFile(path, code) {
+  static async getFile(path, code) {
     return fs.readFileSync(path, code);
   }
 }
