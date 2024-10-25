@@ -3,6 +3,7 @@ const path = require('path');
 const inquirer = require('inquirer');
 const pathTopics = ('./topics')
 const ParseFile = require('./ParseFile')
+const chalk = require("chalk");
 
 class QuizzConsole {
    static async getQA(directory) {
@@ -46,9 +47,9 @@ class QuizzConsole {
 
          // Сравниваем ответ пользователя с правильным ответом
          if (response.userAnswer.trim().toLowerCase() === answer.trim().toLowerCase()) {
-            console.log('Правильно!');
+            console.log(chalk.green.bold("✔ Правильно! 👍"));
          } else {
-            console.log(`Неправильно. Правильный ответ: ${answer}`);
+            console.log(chalk.red.bold(`✗ Неправильно! 💩 Правильный ответ: ${answer}`));
          }
       }
    }

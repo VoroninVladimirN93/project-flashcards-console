@@ -31,6 +31,6 @@ class ParseFile {
 
 }
 
-ParseFile.parse("./topics/raccoon_flashcard_data.txt", 'utf8')
+// ParseFile.parse("./topics/raccoon_flashcard_data.txt", 'utf8')
 
 module.exports = ParseFile;
