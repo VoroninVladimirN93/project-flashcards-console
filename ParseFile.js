@@ -3,12 +3,11 @@ const {EOL} = require ('os')
 const QA = require ('./QA')
 
 class ParseFile {
-
     static async parse (path, code) {
         const getText = await ReadFile.getFile(path, code)
 
         const getArrayQA = getText.split(EOL).filter((el) => el!=(''))
-        console.log(getArrayQA)
+        // console.log(getArrayQA)
 
         const arrayQA = [];
         let question = '';
@@ -26,11 +25,12 @@ class ParseFile {
             
         }
 
-
-        console.log (arrayQA)
+        // console.log (arrayQA)
+        return arrayQA
     }    
 
 }
 
 ParseFile.parse("./topics/raccoon_flashcard_data.txt", 'utf8')
 
+module.exports = ParseFile;
