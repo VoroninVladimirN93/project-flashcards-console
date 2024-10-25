@@ -8,7 +8,7 @@ class ParseFile {
         const getArrayQA = getText.split(EOL).filter((el) => el!=(''))
         const arrayQA = getArrayQA.map (el => {
             const [question, answer] =  el.split(',')
-            return new arrayQA()})
+            return new QA()})
     }    
 
 }
