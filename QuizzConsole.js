@@ -1,10 +1,36 @@
+const fs = require('fs');
+const path = require('path');
 const inquirer = require('inquirer');
-const ParseFile = require ('./ParseFile')
+const pathTopics = ('./topics')
+const ParseFile = require('./ParseFile')
 
 class QuizzConsole {
-   static async getQA(path, code) {
-      const arrayQA = await ParseFile.parse(path, code);
+   static async getQA(directory) {
+      // Получаем список файлов в директории
+      const files = fs.readdirSync(pathTopics)
       
+      // Если нет файлов, выводим сообщение и выходим
+      if (files.length === 0) {
+         console.log('В директории нет файлов для чтения.');
+         return;
+      }
+
+      // Запрашиваем у пользователя выбор файла
+      const { selectedFile } = await inquirer.default.prompt([
+         {
+            type: 'list',
+            name: 'selectedFile',
+            message: 'Выберите файл для чтения:',
+            choices: files,
+         }
+      ]);
+
+      // Полный путь к выбранному файлу
+      const filePath = path.join(directory, selectedFile);
+      
+      // Читаем и парсим файл
+      const arrayQA = await ParseFile.parse(filePath, 'utf8');
+
       for (let i = 0; i < arrayQA.length; i++) {
          const question = arrayQA[i].question;
          const answer = arrayQA[i].answer;
@@ -14,7 +40,7 @@ class QuizzConsole {
             {
                type: 'input',
                name: 'userAnswer',
-               message: `Вопрос: ${question} Ваш ответ:` 
+               message: `Вопрос: ${question} Ваш ответ:`,
             }
          ]);
 
@@ -28,28 +54,5 @@ class QuizzConsole {
    }
 }
 
-// Вызов метода getQA
-QuizzConsole.getQA("./topics/raccoon_flashcard_data.txt", 'utf8');
-
-// inquirer
-// .default
-//  .prompt([
-//  { type: 'input', name: 'username', message: 'Введи имя:' },
-//  {
-//  type: 'list',
-//  name: "file",
-//  message: "Выбери Тему из списка:",
-//  choices: [
-//  { name: 'Не опаздывал', value: 100 },
-//  { name: 'Не опаздывал', value: 200 },
-//  { name: 'Не опаздывал', value: 300 },
-//  ],
-//  },
-//  ])
-//  .then((answers) => console.log(answers));
-
-// const quiz = new Quiz(questionObjects);
-// quiz.start();
-
-//  console.log(inquirer);
- 
+// Вызов метода getQA с указанием директории
+QuizzConsole.getQA("./topics");
