@@ -10,9 +10,22 @@ class ParseFile {
         const getArrayQA = getText.split(EOL).filter((el) => el!=(''))
         console.log(getArrayQA)
 
-        const arrayQA = getArrayQA.map (el => {
-            const [question, answer] = el.split(EOL)
-            return new QA(question, answer)})    
+        const arrayQA = [];
+        let question = '';
+
+        for (let i = 0; i < getArrayQA.length; i++) {
+            const line = getArrayQA[i];
+
+            if (question === '') {
+                    question = line;
+                } else {
+                    const answer = line;
+                    arrayQA.push(new QA(question, answer));
+                    question = '';
+                }
+            
+        }
+
 
         console.log (arrayQA)
     }    

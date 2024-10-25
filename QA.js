@@ -1,5 +1,3 @@
-
-
 class QA {
     constructor(question,answer) {
         this.question = question
