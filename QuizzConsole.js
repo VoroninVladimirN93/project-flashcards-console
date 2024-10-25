@@ -6,6 +6,20 @@ const ParseFile = require('./ParseFile')
 const chalk = require("chalk");
 
 class QuizzConsole {
+   static start() {
+      console.log(chalk.green(`
+######## ########    ###    ##     ## ########  ######## ########  ########  #### ##     ## 
+   ##    ##         ## ##   ###   ### ##     ## ##       ##     ## ##     ##  ##  ###   ### 
+   ##    ##        ##   ##  #### #### ##     ## ##       ##     ## ##     ##  ##  #### #### 
+   ##    ######   ##     ## ## ### ## ########  ######   ########  ##     ##  ##  ## ### ## 
+   ##    ##       ######### ##     ## ##        ##       ##   ##   ##     ##  ##  ##     ## 
+   ##    ##       ##     ## ##     ## ##        ##       ##    ##  ##     ##  ##  ##     ## 
+   ##    ######## ##     ## ##     ## ##        ######## ##     ## ########  #### ##     ## `))
+  console.log('\n')
+      console.log( chalk.bgGreen.black(`░░░░░░░░░░ Выберите тему квиза! ░░░░░░░░░`)); 
+      console.log('\n')
+   }
+
    static async getQA(directory) {
       // Получаем список файлов в директории
       const files = fs.readdirSync(pathTopics)
@@ -33,8 +47,8 @@ class QuizzConsole {
       const arrayQA = await ParseFile.parse(filePath, 'utf8');
 
       for (let i = 0; i < arrayQA.length; i++) {
-         const question = arrayQA[i].question;
-         const answer = arrayQA[i].answer;
+         const {question} = arrayQA[i];
+         const {answer} = arrayQA[i];
 
          // Используем Inquirer для вывода вопроса и получения ответа
          const response = await inquirer.default.prompt([
@@ -56,4 +70,5 @@ class QuizzConsole {
 }
 
 // Вызов метода getQA с указанием директории
+QuizzConsole.start();
 QuizzConsole.getQA("./topics");
